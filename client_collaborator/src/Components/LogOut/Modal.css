@@ -1,0 +1,18 @@
+.idInpds{
+    font-size: 1.3em;
+    width: 100%;
+    margin-top: 10px;
+}
+.idInpds input{
+    padding: 5px;
+    padding-left: 10px;
+    border: 1px solid rgba(0, 0, 255, 0.466);
+    border-radius: 5px;
+    margin-left: 5px;
+    width: 100%;
+    outline: none;
+    font-weight: 600;
+}
+.idInpds input:focus-visible{
+    border: 1px solid rgba(0, 0, 255, 0.726);
+}
