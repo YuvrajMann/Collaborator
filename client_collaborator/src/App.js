@@ -4,6 +4,8 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import RoomJoin from "./Components/RoomJoin/RoomJoin";
 import LogOutOpts from "./Components/LogOut/LogOutOpts";
+import Playground from "./Components/MainPlayground/MainPlayground";
+
 const { io } = require("socket.io-client");
 let socket;
 
@@ -29,6 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LogOutOpts socket={socket}></LogOutOpts>}></Route>
         <Route path="/joinRoom" element={<RoomJoin  socket={socket}></RoomJoin>}></Route>
+        <Route path="/playground" element={<Playground socket={socket}></Playground>}></Route>
       </Routes>
     </Router>
   );

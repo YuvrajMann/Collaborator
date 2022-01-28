@@ -1,0 +1,11 @@
+.head_h{
+    background-color: #1e1e1e;
+    padding: 5px;
+    display: flex;
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.445);
+    justify-content: flex-end;
+}
+.left_area{
+
+    background-color: #1e1e1e;
+}
