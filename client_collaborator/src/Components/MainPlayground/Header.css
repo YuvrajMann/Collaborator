@@ -1,0 +1,70 @@
+.my_top_header{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.178);
+}
+.my_top_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 5px;
+    padding-bottom: 5px;
+}
+.chat_icn{
+    cursor: pointer;
+    /* background-color: rgba(0, 0, 0, 0.178); */
+    border-radius: 50%;
+    padding: 5px;
+    width: 36px;
+    font-size: 17px;
+    text-align: center;
+    transition: all ease-in-out 0.1s;
+}
+.chat_icn:hover{
+    background-color: rgba(0, 0, 0, 0.178);
+    border-radius: 50%;
+    padding: 5px;
+    text-align: center;
+}
+.chat_m_ara{
+    display: flex;
+    border-top: 1px solid rgba(0, 0, 0, 0.267);
+    width: 100%;
+    margin-left: -24px;
+    align-content: flex-end;
+    position: fixed;
+    bottom: 10px;
+}
+.btm_ara{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    align-items: center;
+}
+.btm_ara button{
+   width: 33px;
+   margin-left: 2px;
+   border: 1px solid rgba(0, 0, 0, 0.219);
+    border-radius: 10%;
+    padding: 5px;
+    font-size: 14px;
+    text-align: center;
+    text-align: center;
+}
+.btm_ara button:hover{
+    background-color: rgba(0, 0, 0, 0.151);
+}
+.btm_ara input{
+    width: 93%;
+    margin-left: 10px;
+    background-color: rgba(0, 0, 0, 0.062);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.219);
+    padding: 5px;
+    outline: none;
+    padding-left: 10px;
+}
+.btm_ara input:focus{
+    box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.267);
+}
