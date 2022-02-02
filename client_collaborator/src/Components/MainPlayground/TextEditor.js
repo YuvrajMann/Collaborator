@@ -1,32 +1,36 @@
-import React, {Component} from 'react';
+import React, {useState,useEffect} from 'react';
 import RichTextEditor from 'react-rte';
-
-class MyStatefulEditor extends Component {
- 
-
-  state = {
-    value: RichTextEditor.createEmptyValue()
+export default function MyStatefulEditor(props){
+  let [state,setState]=useState(RichTextEditor.createEmptyValue());
+  let onChange = (value) => {
+        setState(value);
+        let location=window.location.href;
+        let roomId=location.toString().split('/')[4];
+        roomId=roomId.split('?')[0];
+        let name=location.toString().split('?')[1];
+        if(props.socket){
+          // value=JSON.stringify(value);
+          value=value.toString('html')
+          props.socket.emit('newEditorState',value,roomId);  
+        }
   }
-
-  onChange = (value) => {
-    this.setState({value});
-    if (this.props.onChange) {
-      // Send the changes up to the parent component as an HTML string.
-      // This is here to demonstrate using `.toString()` but in a real app it
-      // would be better to avoid generating a string on each change.
-      this.props.onChange(
-        value.toString('html')
-      );
+  useEffect(()=>{
+    if(props.socket){
+      props.socket.on('newEditorState',(value,socketId,roomId)=>{
+        if(props.socket.id.toString()!=socketId.toString()){
+          // value=JSON.parse(value);
+          let newState=RichTextEditor.createValueFromString(value,'html');
+          setState(newState);
+          // console.log(value);
+        }
+      })
     }
-  };
-
-  render () {
-    return (
-      <RichTextEditor
-        value={this.state.value}
-        onChange={this.onChange}
-      />
-    );
-  }
+  },[props.socket])
+      
+  return (
+    <RichTextEditor
+      value={state}
+      onChange={onChange}
+    />
+  );
 }
-export default MyStatefulEditor;

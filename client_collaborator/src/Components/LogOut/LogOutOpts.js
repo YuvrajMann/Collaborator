@@ -5,8 +5,10 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { nanoid } from 'nanoid'
 import NewRoomModal from './NewRoomModal';
 import RoomJoinModal from './RoomJoinModal';
+import { useNavigate   } from "react-router-dom";
 
 export default function LogOutOpts(props) {
+  const history = useNavigate();
   let [loading,setLoading]=useState(false);
   let [newRoomModalOpen,setNewRoomModalOpen]=useState(false);
   let [joinRoomModalOpen,setJoinRoomModalOpen]=useState(false);
@@ -32,7 +34,8 @@ export default function LogOutOpts(props) {
   let newRoomJoin=(name)=>{
     let nanoId=nanoid(10);
     console.log(name);
-    props.socket.emit('newRoomCreate',nanoId,name);
+    history(`/playground/${nanoId}?${name}`);
+    // props.socket.emit('newRoomCreate',nanoId,name);
     setLoading(true);
   };
 
@@ -54,7 +57,6 @@ export default function LogOutOpts(props) {
       <div className="innerBlurArea">
         <div id="textarea">
             <button onClick={()=>{
-             
               setJoinRoomModalOpen(true);
             }}>Join Room</button>     
           <button onClick={()=>{

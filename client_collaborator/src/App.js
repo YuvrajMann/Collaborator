@@ -31,7 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LogOutOpts socket={socket}></LogOutOpts>}></Route>
         <Route path="/joinRoom" element={<RoomJoin  socket={socket}></RoomJoin>}></Route>
-        <Route path="/playground" element={<Playground socket={socket}></Playground>}></Route>
+        <Route path="/playground/:roomId" element={<Playground socket={socket}></Playground>}></Route>
       </Routes>
     </Router>
   );

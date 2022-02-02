@@ -10,12 +10,19 @@ export default function LeftPaneHead(props) {
       </div>
       <Select
         showSearch
+        value={props.language}
         style={{ width: 100, fontSize: "13px" }}
         placeholder="Language"
         OptionFilterProp="children"
         onChange={(e)=>{
-        
           props.setLanguage(e);
+          let location=window.location.href;
+          let roomId=location.toString().split('/')[4];
+          roomId=roomId.split('?')[0];
+          let name=location.toString().split('?')[1];
+          if(props.socket){
+            props.socket.emit('newLanguage',e,roomId);  
+          }
         }}
         filterOption={(input, Option) =>
           Option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
@@ -113,8 +120,16 @@ export default function LeftPaneHead(props) {
         style={{ width: 125, fontSize: "13px", marginLeft: "5px" }}
         placeholder="Theme"
         OptionFilterProp="children"
+        value={props.theme}
         onChange={(e)=>{
           props.setTheme(e);
+          let location=window.location.href;
+          let roomId=location.toString().split('/')[4];
+          roomId=roomId.split('?')[0];
+          let name=location.toString().split('?')[1];
+          if(props.socket){
+            props.socket.emit('newTheme',e,roomId);  
+          }
         }}
       >
         <Option value="vs">Visual Studio</Option>
