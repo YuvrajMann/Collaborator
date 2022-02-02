@@ -57,9 +57,27 @@ var collaboratorSocket=(socket,io)=>{
             rooms[roomId].add(socketId);
         }
         socket.join(roomId.toString());
-        // console.log(io.sockets.adapter.rooms);
+        console.log(io.sockets.adapter.rooms);
         io.to(roomId).emit('confirmNewRoom',socket.id,roomId,name);
-    });     
+    });
+    
+    socket.on('newCode',(value,roomId)=>{
+        console.log(value,roomId);
+        
+        io.to(roomId).emit('newCodeChanges',value,socket.id,roomId);
+    });
+    socket.on('newLanguage',(value,roomId)=>{
+        console.log(value,roomId);
+        
+        io.to(roomId).emit('newLanguage',value,socket.id,roomId);
+    });
+    socket.on('newTheme',(value,roomId)=>{
+        console.log(value,'new theme');
+        io.to(roomId).emit('newTheme',value,socket.id,roomId);
+    });
+    socket.on('newEditorState',(value,roomId)=>{
+        io.to(roomId).emit('newEditorState',value,socket.id,roomId);
+    });
 }
 
 module.exports={
