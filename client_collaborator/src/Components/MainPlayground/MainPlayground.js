@@ -9,6 +9,7 @@ import "draft-js/dist/Draft.css";
 import TextEditor from "./TextEditor";
 import Header from "./Header";
 import { useNavigate   } from "react-router-dom";
+import { message } from "antd";
 
 export default function MainPlayground(props) {
   const editorRef = useRef(null);
@@ -16,6 +17,10 @@ export default function MainPlayground(props) {
   let [language, setLanguage] = useState(null);
   let [theme, setTheme] = useState("vs-dark");
   let [codeEditorVal,setCodeEditorVal]=useState('//Collaborator 🤝');
+  let [roomParticipants,setParticipants]=useState([]);
+  let location=window.location.href;
+  let roomId=location.toString().split('/')[4];
+  roomId=roomId.split('?')[0];
   const [editorState, setEditorState] = React.useState(() =>
     EditorState.createEmpty()
   );
@@ -33,9 +38,8 @@ export default function MainPlayground(props) {
   },[codeEditorVal]);
 
   function onEditorChange(e){
-    let location=window.location.href;
-    let roomId=location.toString().split('/')[4];
-    roomId=roomId.split('?')[0];
+   
+  
     let name=location.toString().split('?')[1];
     if(props.socket){
       props.socket.emit('newCode',e,roomId);  
@@ -43,21 +47,27 @@ export default function MainPlayground(props) {
   }
   useEffect(()=>{
     if(props.socket){
+      //new Person join a room
       props.socket.on('newCodeChanges',(value,socketId,roomId)=>{
         // console.log(value,props.socket.id,socketId);
         if(props.socket.id.toString()!=socketId.toString()){
           setCodeEditorVal(value);
         }
       })
-      props.socket.on('confirmNewRoom',(socketId,roomId,name)=>{
+      props.socket.on('confirmNewRoom',(socketId,roomId,name,participats)=>{
         // console.log(socketId,name);
         // console.log('joined the room');
-        
+        setParticipants(participats);
+
         if(props.socket.id==socketId){
           // console.log('Got confirmation for joining room :',roomId);
-         
+          message.success(`Successfully joined the room with room id ${roomId}`);                  
+        }
+        else{
+          message.success(`${name} joined the room`);             
         }
       });
+
       props.socket.on('newLanguage',(value,socketId,roomId)=>{
         if(props.socket.id.toString()!=socketId.toString()){
           setLanguage(value);
@@ -68,6 +78,10 @@ export default function MainPlayground(props) {
           setTheme(value);
         }
       })
+      props.socket.on('personDisconnected',(socketId,roomId,members,name)=>{
+        message.success(`${name} left the room`);
+        setParticipants(members);
+      });
       let location=window.location.href;
       let roomId=location.toString().split('/')[4];
       roomId=roomId.split('?')[0];
@@ -79,7 +93,7 @@ export default function MainPlayground(props) {
 
   return (
     <div>
-      <Header></Header>
+      <Header participats={roomParticipants} roomId={roomId}></Header>
       <SplitPane split="vertical" defaultSize={"50vw"}>
         <div className="left_area">
           <LeftPaneHead

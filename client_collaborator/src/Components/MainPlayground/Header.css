@@ -71,6 +71,21 @@
     padding-left: 15px;
     border-radius: 20px;
 }
+.header_left_area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.roomId_indicator{
+    margin-left: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 4px;
+    color: rgba(0, 0, 0, 0.788);
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.199);
+    border-radius: 5px;
+}
 /* .btm_ara input:focus{
     box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.267);
 } */
