@@ -1,8 +1,15 @@
 let rooms = {};
+var {chatSocket}=require('./chatSocket');
 
 var collaboratorSocket = (socket, io) => {
   let socketId = socket.id;
   let currentRoomId = null;
+
+  // chatSocket(socket,io,rooms,currentRoomId);
+  socket.on('newMessage',(message,senderName,roomId)=>{
+    console.log(message,roomId);
+    io.to(roomId).emit("newMessage",message,senderName,socketId);
+  })
 
   socket.on("createorJoinRoom", (arg1, arg2) => {
     console.log(arg1, arg2);
@@ -33,6 +40,16 @@ var collaboratorSocket = (socket, io) => {
       console.log(sids, rooms);
       // console.log(io.sockets.adapter.rooms);
       io.to(roomId).emit("confirmNewRoom", socket.id, roomId, name);
+    }
+  });
+
+  socket.on("checkRoomExistence",(roomId,name)=>{
+    roomId=roomId.toString();
+    if(!rooms.hasOwnProperty(roomId)){
+      socket.emit('roomNotFound',roomId);
+    }
+    else{
+      socket.emit('roomFound',roomId,name);
     }
   });
 
@@ -67,6 +84,11 @@ var collaboratorSocket = (socket, io) => {
   socket.on("newEditorState", (value, roomId) => {
     io.to(roomId).emit("newEditorState", value, socket.id, roomId);
   });
+  socket.on("getRoomParticipant",(roomId)=>{
+    let rms=rooms[roomId];
+    io.to(roomId).emit("roomParticipants", rms, socket.id, roomId);
+  });
+
   socket.on("disconnect", (reason) => {
     console.log(socket.id, currentRoomId);
     let members = rooms[currentRoomId];
@@ -89,6 +111,7 @@ var collaboratorSocket = (socket, io) => {
       name
     );
   });
+
 };
 
 module.exports = {
