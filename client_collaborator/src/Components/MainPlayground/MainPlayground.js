@@ -93,7 +93,7 @@ export default function MainPlayground(props) {
 
   return (
     <div>
-      <Header participats={roomParticipants} roomId={roomId}></Header>
+      <Header participats={roomParticipants} socket={props.socket} roomId={roomId}></Header>
       <SplitPane split="vertical" defaultSize={"50vw"}>
         <div className="left_area">
           <LeftPaneHead

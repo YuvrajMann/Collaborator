@@ -33,14 +33,15 @@
     margin-left: -24px;
     align-content: flex-end;
     position: fixed;
-    bottom: 10px;
+    bottom: 5px;
+    background-color: white;
+    /* margin-bottom: -5px; */
 }
 .btm_ara{
         display: flex;
         align-items: center;
         align-items: center;
         margin-top: 10px;
-
         width: 100%;
 }
 .btm_ara button{
@@ -51,25 +52,31 @@
     padding: 6px;
     height: 33px;
     padding-left: 9px;
+    margin-top: 3px;
     text-align: center;
     /* width: 34px; */
     text-align: center;
     text-align: center;
     color: white;
 }
+.btm_ara form{
+    display: flex;    
+    margin-bottom: 10px;
+}
 /* .btm_ara button:hover{
     background-color: rgba(0, 0, 0, 0.151);
 } */
-.btm_ara input{
+.btm_ara textarea{
     width: 565px;
     margin-left: 10px;
     background-color: #f1f3f5;
-    border-radius: 5px;
+    border-radius: 1px;
     border: 1px solid rgba(0, 0, 0, 0.13);
     padding: 5px;
     outline: none;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 5px;
+    resize: none;
 }
 .header_left_area{
     display: flex;
@@ -89,3 +96,86 @@
 /* .btm_ara input:focus{
     box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.267);
 } */
+.u_message{
+    display: flex;
+    justify-content: flex-start;
+}
+.p_message{
+    display: flex;
+    justify-content: flex-end;
+   
+}
+.message_leftSide{
+    max-width: 70%;
+    background-color: #007bff;
+    border-radius: 3px;
+    margin-top: 7px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+    white-space: pre-wrap;
+    text-align: left;
+  
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+ /* Non standard for webkit */
+     word-break: break-word;
+
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto;
+}
+.message_leftSide a{
+    text-decoration: underline;
+    color: whitesmoke !important;
+    
+}
+.message_leftSide a:hover{
+    text-decoration: underline;
+}
+.message_rightSide{
+    -ms-word-break: break-all;
+    word-break: break-all;
+
+ /* Non standard for webkit */
+     word-break: break-word;
+
+    -webkit-hyphens: auto;
+       -moz-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto;
+    max-width: 70%;
+    background-color: #F2F2F7;
+    border-radius: 3px;
+    margin-top: 7px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    white-space: pre-wrap;
+    text-align: left;
+}
+.ant-drawer-body {
+    max-height:calc(100% - 132.5px);
+}
+.message_leftSide .mess_creator{
+    font-weight: 600;
+    font-size: 0.8em;
+    color: white;
+    text-align: left;
+}
+.message_leftSide .mess_date{
+    font-size: 0.7em;
+    text-align: right;
+}
+.message_rightSide .mess_creator{
+    font-weight: 600;
+    font-size: 0.8em;
+    text-align: left;
+}
+.message_rightSide .mess_date{
+    font-size: 0.7em;
+    text-align: right;
+}
