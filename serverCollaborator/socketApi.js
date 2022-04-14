@@ -13,7 +13,6 @@ io.on("connection", (socket) => {
     socket.on('createorJoinRoom',(roomId)=>{
         socket.join(roomId);
     });
-
 });
 
 // end of socket.io logic

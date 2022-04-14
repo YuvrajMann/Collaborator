@@ -1,0 +1,38 @@
+.login_wrapper{
+    height: 100vh;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,101,192,1) 100%);
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+.main_wrap{
+}
+.main_wrap input{
+    margin-bottom: 17px;
+}
+.txt_m{
+    color: white;
+    padding-top: 30px;
+}   
+.intial_inputs{
+    display: block;
+    width: 400px;
+    font-size: 17px;
+    font-weight: 400;
+    padding-left: 13px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    outline: none;
+    
+}
+.intial_inputs:focus{
+    /* border-color: #FF0000;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); */
+    transition: all ease-in-out 0.1s;
+    border-color: #1890ff;
+    box-shadow: 0 0 0 0.2rem #188fffde;
+}

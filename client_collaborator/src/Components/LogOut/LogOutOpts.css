@@ -20,35 +20,32 @@
     align-items: center;
 }
 .innerBlurArea {
-
     border-radius: 5px;
-    height: 70vh;
+    height: 200px;
     display: flex;
-    
     justify-content: center;
     margin-top: -40px;
     align-items: center;
     align-content: flex-start;
     width: 100%;
-  }
-  @media screen and (min-width:400px) {
+}
+
+@media screen and (min-width:400px) {
     .innerBlurArea button{
         margin-right: 20px;
     }      
-  }
-  .innerBlurArea button{
-     
-      font-size: 1.9em;
-      margin-top: 20px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: 0px;
-      padding: 27px;
-      width: 300px;
-      text-align: center;
+}
+.innerBlurArea button{
+    font-size: 1.3em;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0px;
+    padding: 27px;
+    width: 200px;
     background-color:var(--backBlue);
-        color: white;
-    }
+    color: white;
+}
 .innerBlurArea button:hover{
     box-shadow: 6px 6px 0px 0px rgb(2, 37, 78);
     transition: all ease-in-out 0.1s;

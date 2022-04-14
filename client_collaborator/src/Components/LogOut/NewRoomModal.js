@@ -7,7 +7,8 @@ import { message } from "antd";
 
 export default function NewRoomModal(props) {
   const cancelButtonRef = useRef(null);
-  let [name,setName]=useState(null);
+  let [name, setName] = useState(null);
+  let [description,setDescription]=useState(null);
 
   return (
     <Transition.Root show={props.newRoomModalOpen} as={Fragment}>
@@ -51,29 +52,41 @@ export default function NewRoomModal(props) {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="mt-2">
-                  
-                    <div className="idInpds">
-                       <input onChange={(e)=>{
-                           setName(e.target.value);
-                       }} placeholder="what should we call you?" type="text"></input>
-                    </div>
-                
+                  <div className="idInpds">
+                    <input onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                      placeholder="Give Room A Name" type="text"
+                    ></input>
+                    <textarea onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                      placeholder="Give Room a suitable description" 
+                      type="textarea"
+                    ></textarea>
+                  </div>
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={() => {
-                    if(name){
-                      props.setNewRoomModalOpen(false);
-                      props.newRoomJoin(name);  
-                    }
-                    else{
-                      message.warning('Name field is requred!');
-                    }
-                }}
+                      props.newRoomJoin(name,description);
+                    // if (name) {
+                    //   props.setNewRoomModalOpen(false);
+                    // }
+                    // else {
+                    //   message.warning('Name field is requred!');
+                    // }
+                  }}
                 >
-                  Create and Join New Room
+                  {
+                    props.btnLoading?(
+                      'Loading'
+                    ):(
+                      'Create and Join New Room'
+                    )
+                  }
                 </button>
                 <button
                   type="button"

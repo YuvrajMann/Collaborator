@@ -55,15 +55,6 @@ export default function NewRoomModal(props) {
                   <div className="idInpds">
                     <input
                       onChange={(e) => {
-                        setName(e.target.value);
-                      }}
-                      placeholder="what should we call you?"
-                      type="text"
-                    ></input>
-                  </div>
-                  <div className="idInpds">
-                    <input
-                      onChange={(e) => {
                         setRoomId(e.target.value);
                       }}
                       placeholder="Room Id"

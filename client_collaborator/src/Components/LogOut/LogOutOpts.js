@@ -7,10 +7,12 @@ import NewRoomModal from './NewRoomModal';
 import RoomJoinModal from './RoomJoinModal';
 import { useNavigate   } from "react-router-dom";
 import {message} from 'antd';
+import { axiosInstance } from "../../utils/axiosInterceptor";
 
 export default function LogOutOpts(props) {
   const history = useNavigate();
   let [loading,setLoading]=useState(false);
+  let [btnLoading,setBtnLoading]=useState(false);
   let [newRoomModalOpen,setNewRoomModalOpen]=useState(false);
   let [joinRoomModalOpen,setJoinRoomModalOpen]=useState(false);
 
@@ -43,31 +45,48 @@ export default function LogOutOpts(props) {
       let pattern=/^\S*$/;
       return pattern.test(name);
   }
-  let newRoomJoin=(name)=>{
-    if(usernameRegex(name)){     
-      let nanoId=nanoid(10);
-      console.log(name);
-      history(`/playground/${nanoId}?${name}`);
-      // props.socket.emit('newRoomCreate',nanoId,name);
-      setLoading(true);  
-    }
-    else{
-      message.warning('Invalid username , must not contain spaces');
-    }
+    // if(usernameRegex(name)){     
+    //   let nanoId=nanoid(10);
+    //   console.log(name);
+    //   history(`/playground/${nanoId}?${name}`);
+    //   // props.socket.emit('newRoomCreate',nanoId,name);
+    //   setLoading(true);  
+    // }
+    // else{
+    //   message.warning('Invalid username , must not contain spaces');
+    // }
+  let newRoomJoin=(roomName,roomDescription)=>{
+  
+    console.log('correct');
+    setBtnLoading(true);
+    axiosInstance.post('/rooms/createAndAssignRoom',{
+      roomname:roomName,
+      room_description:roomDescription
+    }).then((resp)=>{
+      setBtnLoading(false);
+      message.success('New Room Created successfully!');
+    })
+    .catch((err)=>{
+      message.success('Some error occured');
+      setBtnLoading(false);
+    })
   };
 
   let joinARoom=(name,roomId)=>{
-    if(usernameRegex(name)){     
-      props.socket.emit('checkRoomExistence',roomId,name);
-    }
-    else{
-      message.warning('Invalid username , must not contain spaces');
-    }
+    // console.log('correctf');
+    // if(usernameRegex(name)){     
+    //   props.socket.emit('checkRoomExistence',roomId,name);
+    // }
+    // else{
+    //   message.warning('Invalid username , must not contain spaces');
+    // }
   };
 
   return (
     <div className="logJoinNew">
-      <NewRoomModal  newRoomJoin={newRoomJoin} newRoomModalOpen={newRoomModalOpen} setNewRoomModalOpen={setNewRoomModalOpen}></NewRoomModal>
+      <NewRoomModal btnLoading={btnLoading}  newRoomJoin={()=>{
+        console.log('Goon')
+      }} newRoomModalOpen={newRoomModalOpen} setNewRoomModalOpen={setNewRoomModalOpen}></NewRoomModal>
       <RoomJoinModal joinARoom={joinARoom} joinRoomModalOpen={joinRoomModalOpen} setJoinRoomModalOpen={setJoinRoomModalOpen}></RoomJoinModal>
       <div className="header_area">
         <img

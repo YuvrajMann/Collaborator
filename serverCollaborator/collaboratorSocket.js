@@ -1,5 +1,6 @@
 let rooms = {};
 var {chatSocket}=require('./chatSocket');
+const { Client } = require('pg')
 
 var collaboratorSocket = (socket, io) => {
   let socketId = socket.id;
@@ -111,7 +112,6 @@ var collaboratorSocket = (socket, io) => {
       name
     );
   });
-
 };
 
 module.exports = {
