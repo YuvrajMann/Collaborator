@@ -11,7 +11,10 @@ import { Input, Button } from "antd";
 import axios from 'axios';
 import { axiosInstance } from "../../utils/axiosInterceptor.js";
 
+
 export default function Login() {
+    const history = useNavigate();
+
     let [username, setUserName] = useState("");
     let [password, setPassword] = useState("");
     let [loading, setLoading] = useState(false);
@@ -34,6 +37,7 @@ export default function Login() {
 
             localStorage.setItem("token",resp.data.secretToken)
             message.success('Successfully logged IN!');
+            history('/roomSelector');
             setLoading(false);
         })
         .catch((err) => {

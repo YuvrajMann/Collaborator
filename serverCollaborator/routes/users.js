@@ -84,12 +84,15 @@ router.post("/signUp", (req, res, next) => {
     }
   });
 });
-router.post('/checkCodeRoute',authenticate.verifyUser,(req,res,next)=>{
-  // userRoomController.createUserRoomTable(1,1).then((resp)=>{
-    res.status(200).send("User and room successfully linked!");
-  // })
-  // .catch((err)=>{
-  //   next(err);
-  // });
+router.get('/getUserPrfileInfo',authenticate.verifyUser,(req,res,next)=>{
+  let sql=`
+    Select* From users where id='${res.locals.userId}';
+  `
+  DBController.con.query(sql, (err, result,fields) => {
+    if (err){
+      next(err);
+    }
+    res.status(200).send(result);  
+  });
 });
 module.exports = router;

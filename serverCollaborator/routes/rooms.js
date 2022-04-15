@@ -7,7 +7,42 @@ var DBController = require("../DBController");
 
 var authenticate = require("../authenticate");
 
+router.post("/checkIfPersonIsParticipantOfRoom", authenticate.verifyUser, (req, res, next) => {
+    let roomId = req.body.roomId;
 
+    let nsql = `
+        Select* From Rooms
+        where room_id_assigned='${roomId}';
+    `;
+
+    DBController.con.query(nsql, (err, result) => {
+        if (err) {
+            next(err);
+        }
+        else {
+            console.log(result);
+            let fsql = `
+                Select* From Rooms 
+                inner join usersRooms 
+                ON usersRooms.room_id=Rooms.id 
+                where user_id='${res.locals.userId}' AND room_id='${result[0].id}';
+            `;
+            DBController.con.query(fsql, (err, result1) => {
+                if (err) {
+                    next(err);
+                }
+                else {
+                    if (result1.length == 0) {
+                        res.status(200).send('NO');
+                    }
+                    else {
+                        res.status(200).send('YES');
+                    }
+                }
+            })
+        }
+    });
+});
 router.get("/getRoomsUnderUser", authenticate.verifyUser, (req, res, next) => {
     let nsql = `
         Select* From Rooms 
@@ -17,14 +52,14 @@ router.get("/getRoomsUnderUser", authenticate.verifyUser, (req, res, next) => {
     `;
 
     DBController.con.query(nsql, (err, result) => {
-        if(err){
+        if (err) {
             next(err);
-        }   
-        else{
+        }
+        else {
             res.status(200).send({
                 message: result
             });
-        }     
+        }
     })
 });
 

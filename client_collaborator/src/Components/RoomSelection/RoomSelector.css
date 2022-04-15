@@ -87,3 +87,49 @@
 .room_selector_wrapper{
   
 }
+.drawer_wrap{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.drawer_wrap .username{
+    font-size: 20px;
+    font-weight: 700;
+    padding-top: 10px;
+    color: #0a2c68;
+    text-decoration: underline;
+}
+.listRoom{
+    display: flex;
+    padding-bottom: 10px;
+    padding-top: 20px;
+    align-items: baseline;
+    justify-content: baseline;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.221);
+    width: 100%;
+    cursor: pointer;
+}
+.my_rooms{
+    width: 100%;
+}
+.listRoom:hover{
+    transition: all ease-in-out 0.1s;
+    box-shadow: 3px 3px 0px 0px rgb(68, 76, 85);
+    color: #0a2c68;
+}
+#rm_head{
+    font-size: 15px;
+    text-transform: uppercase;
+    text-decoration: underline;
+    margin-top: 20px;
+}
+.ss_divv{
+    padding-left: 10px;
+}
+.ant-drawer-wrapper-body{
+    height: auto !important;
+}
+.opts_btn{
+    margin-left: 5px;
+}
