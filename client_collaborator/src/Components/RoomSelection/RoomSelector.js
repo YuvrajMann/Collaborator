@@ -87,6 +87,7 @@ export default function RoomSelector(props) {
     fetchRooms();
     getProfile();
   }, []);
+ 
   useEffect(
     () => {
       if (props.socket) {
@@ -180,7 +181,7 @@ export default function RoomSelector(props) {
                 history(`/playground/${room.room_id_assigned}?${username}`);
               }}>
                 <div className='room_imagee'>
-                  <img src='https://lh3.googleusercontent.com/J_9Cx9TsY8_57VCQEOKLLXkeywe5YFvPcKf5Xozm2TZc5LNSUiH6ND0LZtWjI3YBog'></img>
+                  <img src='https://s3.amazonaws.com/images.seroundtable.com/google-amsterdam-conference-room-1436230709.jpg'></img>
                 </div>
                 <div className='s_divv'>
                   <div className='room_usr_name'>{room.roomname}</div>

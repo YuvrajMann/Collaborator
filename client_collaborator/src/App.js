@@ -34,7 +34,7 @@ function App() {
 
   useEffect(()=>{
     console.log('use effect');
-    socket = io('https://collaborator1.herokuapp.com/',{
+    socket = io('http://localhost:3000',{
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttemps: 10,
@@ -44,8 +44,6 @@ function App() {
       rejectUnauthorized: false
     });
     setSocketId(socket);
-
-    
   },[]);
 
   return (
@@ -56,7 +54,7 @@ function App() {
         {/* <Route path="/" element={<LogOutOpts socket={socket}></LogOutOpts>}></Route> */}
         <Route path="/joinRoom" element={<RoomJoin  socket={socket}></RoomJoin>}></Route>
         <Route path="/playground/:roomId" element={<Playground socket={socket}></Playground>}></Route>
-        <Route path="/roomSelector" element={<RoomSelector></RoomSelector>}></Route>
+        <Route path="/roomSelector" element={<RoomSelector socket={socket}></RoomSelector>}></Route>
       </Routes>
     </Router>
   );

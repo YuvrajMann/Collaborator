@@ -9,12 +9,41 @@ import { UserOutlined, AntDesignOutlined } from "@ant-design/icons";
 import { HotKeys } from "react-hotkeys";
 import moment from "moment";
 import Linkify from 'react-linkify';
+import RoomsViewButton from "./RoomsViewButton";
+import { axiosInstance } from "../../utils/axiosInterceptor";
+import { Spin } from 'antd';
+import { Badge } from 'antd';
+import audio from '../../assests/income.mp3'
 
 export default function Header(props) {
   const [visible, setVisible] = useState(false);
   let [message, setMessage] = useState("");
   let [usrMessage, setUsrMessage] = useState("");
   let [allMessages, setAllMessages] = useState([]);
+  let [usersUnderRoom, setUsersUnderRoom] = useState(null);
+  let [usersLoading, setUsersLoading] = useState(false);
+  let [unreadMessage,setUnreadMessage]=useState(false);
+
+  let fetchUsersUnderRoom = (roomId) => {
+    setUsersLoading(true);
+
+    axiosInstance.post(`/rooms/getUsersUnderRoom`, {
+      roomId: roomId
+    }).then((resp) => {
+      setUsersUnderRoom(resp.data.message);
+      console.log(resp.data);
+      setUsersLoading(false);
+    })
+      .catch((err) => {
+        setUsersLoading(false);
+      });
+  }
+  let playAudio = () => {
+    new Audio(audio).play();
+  }
+  useEffect(() => {
+    fetchUsersUnderRoom(props.roomDetails.id);
+  }, []);
   const divRref = useRef(null);
   const showDrawer = () => {
     setVisible(true);
@@ -41,7 +70,7 @@ export default function Header(props) {
   // }
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef();
-    useEffect(() => elementRef.current.scrollIntoView({}),[allMessages]);
+    useEffect(() => elementRef.current.scrollIntoView({}), [allMessages]);
     return <div ref={elementRef} />;
   };
   useEffect(() => {
@@ -53,7 +82,13 @@ export default function Header(props) {
           console.log(allMessages);
           let d = new Date();
           let x = moment(d).format("hh:mm A");
-
+          if(!visible){
+            setUnreadMessage(true);
+          }
+          else{
+            setUnreadMessage(false);
+          }
+          playAudio();
           setAllMessages((prevMessages) => [
             ...prevMessages,
             { message, name, side, x },
@@ -79,9 +114,8 @@ export default function Header(props) {
     setMessage("");
     // scrollDown();
     props.socket.emit("newMessage", message, name, roomId);
-    
-  };
 
+  };
   return (
     <HotKeys keyMap={keyMap} handlers={handlers}>
       <div className="my_top_header">
@@ -92,21 +126,21 @@ export default function Header(props) {
           onClose={onClose}
           visible={visible}
           className="main_cnt"
-          // style={{
-          //   maxHeight:'10px'
-          // }}
-          // bodyStyle={{
-          //   maxHeight:'calc(100% - 51px);'
-          // }}
+        // style={{
+        //   maxHeight:'10px'
+        // }}
+        // bodyStyle={{
+        //   maxHeight:'calc(100% - 51px);'
+        // }}
         >
-          <div ref={divRref}>
+          <div id="mn_ara" ref={divRref}>
             {allMessages.map((mess) => {
               if (mess.side == -1) {
                 return (
                   <div className="p_message">
                     <div className="message_leftSide">
-                    <div className="mess_creator">{mess.name}</div>
-                      <div><Linkify properties={{target: '_blank', style: {color: 'red', fontWeight: 'bold'}}}>{mess.message}</Linkify></div>
+                      <div className="mess_creator">{mess.name}</div>
+                      <div><Linkify properties={{ target: '_blank', style: { color: 'red', fontWeight: 'bold' } }}>{mess.message}</Linkify></div>
                       <div className="mess_date">{mess.x}</div>
                     </div>
                   </div>
@@ -116,7 +150,7 @@ export default function Header(props) {
                   <div className="u_message">
                     <div className="message_rightSide">
                       <div className="mess_creator">{mess.name}</div>
-                      <div><Linkify properties={{target: '_blank', style: {color: 'red', fontWeight: 'bold'}}}>{mess.message}</Linkify></div>
+                      <div><Linkify properties={{ target: '_blank', style: { color: 'red', fontWeight: 'bold' } }}>{mess.message}</Linkify></div>
                       <div className="mess_date">{mess.x}</div>
                     </div>
                   </div>
@@ -164,30 +198,66 @@ export default function Header(props) {
           >
             {props.participats.map((participant) => {
               return (
-                <Tooltip title={participant.name} placement="top">
+                <Tooltip title={participant} placement="top">
                   <Avatar
                     style={{
                       backgroundColor: "#87d068",
                     }}
                   >
-                    {participant.name.toString()[0]}
+                    {participant.toString()[0]}
                   </Avatar>
                 </Tooltip>
               );
             })}
           </Avatar.Group>
-          <div className="roomId_indicator">ROOM ID : {props.roomId}</div>
+          <RoomsViewButton usersUnderRoom={usersUnderRoom} usersLoading={usersLoading}></RoomsViewButton>
+          <div className="roomId_indicator">ROOM : {props.roomDetails.roomname}</div>
+            <div className="editorStatus">{(props.changesSaved=='saved')?'changes saved':'saving changes...'}</div>
         </div>
-        <Tooltip placement="bottom" title="Chat">
-          <div
-            className="chat_icn"
-            onClick={() => {
-              showDrawer();
-            }}
-          >
-            <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
-          </div>
-        </Tooltip>
+        <div style={{ display: 'flex' }}>
+          <Tooltip placement="bottom" title="Chat">
+            {
+              unreadMessage?(
+                <Badge dot>
+                <div
+                  className="chat_icn"
+                  onClick={() => {
+                    setUnreadMessage(false);
+                    showDrawer();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
+                </div>
+                </Badge>
+    
+              ):(
+                <Badge>
+                <div
+                  className="chat_icn"
+                  onClick={() => {
+                    setUnreadMessage(false);
+                    showDrawer();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
+                </div>
+                </Badge>
+              )
+            }
+          </Tooltip>
+          <Tooltip placement="bottom" title={props.username}>
+            <div style={{backgroundColor:'rgba(128, 128, 128, 0.139)',padding:'5px',marginLeft:'8px',borderRadius:'4px'}}>
+            <Avatar
+              style={{ marginLeft: '5px',cursor:'pointer' }}
+              src="https://yt3.ggpht.com/ytc/AKedOLShRb_CLj7OMrlbafR60mYJ-lTrgWocPMsZ5ZYQ5g=s176-c-k-c0x00ffffff-no-rj"
+              size={30}
+              icon={<AntDesignOutlined />}
+            />
+            </div>
+          </Tooltip>
+        </div>
+
+
       </div>
     </HotKeys>
   );

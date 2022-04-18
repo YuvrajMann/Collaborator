@@ -1,8 +1,12 @@
 import React, {useState,useEffect} from 'react';
 import RichTextEditor from 'react-rte';
+import { axiosInstance } from '../../utils/axiosInterceptor';
+
 export default function MyStatefulEditor(props){
   let [state,setState]=useState(RichTextEditor.createEmptyValue());
   let onChange = (value) => {
+   
+
         setState(value);
         let location=window.location.href;
         let roomId=location.toString().split('/')[4];

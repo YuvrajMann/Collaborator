@@ -1,51 +1,83 @@
 .Resizer {
-    background: #000;
-    opacity: 0.3;
-    z-index: 1;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding;
-    background-clip: padding-box;
-  }
+  background: #000;
+  opacity: 0.3;
+  z-index: 1;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.Resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.Resizer.horizontal:hover {
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical {
+  width: 11px;
+  margin: 0 0px;
+  border-left: 6px solid rgba(0, 0, 0, 0.644);
+  border-right: 6px solid rgba(0, 0, 0, 0.644);
+  cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+  width: 11px;
+  margin: 0 0px;
+  border-left: 6px solid rgba(0, 0, 0, 0.993);
+  border-right: 6px solid rgb(0, 0, 0);
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
+}
+.v_my_users button {
+  font-weight: bold;
   
-  .Resizer:hover {
-    -webkit-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-  }
-  
-  .Resizer.horizontal {
-    height: 11px;
-    margin: -5px 0;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
-    cursor: row-resize;
-    width: 100%;
-  }
-  
-  .Resizer.horizontal:hover {
-    border-top: 5px solid rgba(0, 0, 0, 0.5);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
-  }
-  
-  .Resizer.vertical {
-    width: 11px;
-    margin: 0 0px;
-    border-left: 6px solid rgba(0, 0, 0, 0.644);
-    border-right: 6px solid rgba(0, 0, 0, 0.644);
-    cursor: col-resize;
-  }
-  
-  .Resizer.vertical:hover {
-    width: 11px;
-    margin: 0 0px;
-    border-left: 6px solid rgba(0, 0, 0, 0.993);
-    border-right: 6px solid rgb(0, 0, 0);
-  }
-  .Resizer.disabled {
-    cursor: not-allowed;
-  }
-  .Resizer.disabled:hover {
-    border-color: transparent;
-  }
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 4px;
+  margin-left: 5px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.493);
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.v_my_users button:hover{
+  background-color: rgba(0, 0, 0, 0.089);  
+}
+.user_nam{
+  text-align: center; 
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.381); */
+  padding-top: 5px;
+  padding-bottom: 5px; 
+  border: 1px solid black;
+  border-radius: 10px;
+  margin-top: 10px;
+  background-color: #87d068;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  /* display: flex;
+ align-items: center; */
+}
+.usrList_wrap{
+  margin-top: 30px;  
+}

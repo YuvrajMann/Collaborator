@@ -61,3 +61,78 @@ body{
     margin-bottom: 108px;
 
 }  
+.playground_wrapper{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.singInRequire{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,101,192,1) 100%);
+}
+.message_singin{
+    font-size: 30px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+}
+.btn_wrap button{
+    font-size: 1.3em;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0px;
+    padding: 27px;
+    width: 200px;
+    background-color:var(--backBlue);
+    color: white;
+}
+.btn_wrap button:hover{
+    box-shadow: 6px 6px 0px 0px rgb(2, 37, 78);
+    transition: all ease-in-out 0.1s;
+}
+.not_part_wrap{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 80%;
+    flex-direction: column;
+}
+.rm_name{
+    font-size: 30px;
+    font-weight: 600;
+}
+.not_part_wrap button{
+    font-size: 1.3em;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 0px;
+    padding: 27px;
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color:var(--backBlue);
+    color: white;
+}
+.not_part_wrap button:hover{
+    box-shadow: 6px 6px 0px 0px rgb(2, 37, 78);
+    transition: all ease-in-out 0.1s;
+}
+.nott_ppart_wrap{
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,101,192,1) 100%);
+    height: 100vh;
+}
