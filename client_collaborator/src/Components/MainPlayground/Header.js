@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentAlt, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { Tooltip, Drawer } from "antd";
+import { faCommentAlt, faPaperPlane, faHome, faShare } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip, Drawer,Modal } from "antd";
 import SendSvg from "../../assests/send4.svg";
 import { Avatar, Divider } from "antd";
 import { UserOutlined, AntDesignOutlined } from "@ant-design/icons";
@@ -14,6 +14,7 @@ import { axiosInstance } from "../../utils/axiosInterceptor";
 import { Spin } from 'antd';
 import { Badge } from 'antd';
 import audio from '../../assests/income.mp3'
+import { useNavigate } from "react-router-dom";
 
 export default function Header(props) {
   const [visible, setVisible] = useState(false);
@@ -22,7 +23,10 @@ export default function Header(props) {
   let [allMessages, setAllMessages] = useState([]);
   let [usersUnderRoom, setUsersUnderRoom] = useState(null);
   let [usersLoading, setUsersLoading] = useState(false);
-  let [unreadMessage,setUnreadMessage]=useState(false);
+  let [unreadMessage, setUnreadMessage] = useState(false);
+  let [shareDetailsVisible,setShareDetailsVisible]=useState(false);
+
+  const history = useNavigate();
 
   let fetchUsersUnderRoom = (roomId) => {
     setUsersLoading(true);
@@ -82,10 +86,10 @@ export default function Header(props) {
           console.log(allMessages);
           let d = new Date();
           let x = moment(d).format("hh:mm A");
-          if(!visible){
+          if (!visible) {
             setUnreadMessage(true);
           }
-          else{
+          else {
             setUnreadMessage(false);
           }
           playAudio();
@@ -119,6 +123,16 @@ export default function Header(props) {
   return (
     <HotKeys keyMap={keyMap} handlers={handlers}>
       <div className="my_top_header">
+      <Modal
+        title="Share Details"
+        visible={shareDetailsVisible}
+        onCancel={()=>{
+          setShareDetailsVisible(false);
+        }}
+        footer={null}
+      >
+        Ask the user to join the room with this id - <b><u>{props.roomDetails.room_id_assigned}</u></b>
+      </Modal>
         <Drawer
           width={"620px"}
           title="Chat Room"
@@ -186,6 +200,18 @@ export default function Header(props) {
           </div>
         </Drawer>
         <div className="header_left_area">
+          <Tooltip title="Home" placement="bottom">
+            <div
+              className="chat_icn_home"
+              onClick={() => {
+                history('/roomSelector');
+                // setUnreadMessage(false);
+                // showDrawer();
+              }}
+            >
+              <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
+            </div>
+          </Tooltip>
           <Avatar.Group
             maxCount={10}
             maxPopoverTrigger="click"
@@ -212,47 +238,57 @@ export default function Header(props) {
           </Avatar.Group>
           <RoomsViewButton usersUnderRoom={usersUnderRoom} usersLoading={usersLoading}></RoomsViewButton>
           <div className="roomId_indicator">ROOM : {props.roomDetails.roomname}</div>
-            <div className="editorStatus">{(props.changesSaved=='saved')?'changes saved':'saving changes...'}</div>
+          <div className="editorStatus">{(props.changesSaved == 'saved') ? 'changes saved' : 'saving changes...'}</div>
         </div>
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', alignItems: 'center' }}>
+          <Tooltip placement="bottom" title="Share Room">
+            <div
+              className="chat_icn2"
+              onClick={() => {
+                setShareDetailsVisible(true);
+              }}
+            >
+              <FontAwesomeIcon icon={faShare}></FontAwesomeIcon>
+            </div>
+          </Tooltip>
           <Tooltip placement="bottom" title="Chat">
             {
-              unreadMessage?(
+              unreadMessage ? (
                 <Badge dot>
-                <div
-                  className="chat_icn"
-                  onClick={() => {
-                    setUnreadMessage(false);
-                    showDrawer();
-                  }}
-                >
-                  <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
-                </div>
+                  <div
+                    className="chat_icn"
+                    onClick={() => {
+                      setUnreadMessage(false);
+                      showDrawer();
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
+                  </div>
                 </Badge>
-    
-              ):(
+
+              ) : (
                 <Badge>
-                <div
-                  className="chat_icn"
-                  onClick={() => {
-                    setUnreadMessage(false);
-                    showDrawer();
-                  }}
-                >
-                  <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
-                </div>
+                  <div
+                    className="chat_icn"
+                    onClick={() => {
+                      setUnreadMessage(false);
+                      showDrawer();
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCommentAlt}></FontAwesomeIcon>
+                  </div>
                 </Badge>
               )
             }
           </Tooltip>
           <Tooltip placement="bottom" title={props.username}>
-            <div style={{backgroundColor:'rgba(128, 128, 128, 0.139)',padding:'5px',marginLeft:'8px',borderRadius:'4px'}}>
-            <Avatar
-              style={{ marginLeft: '5px',cursor:'pointer' }}
-              src="https://yt3.ggpht.com/ytc/AKedOLShRb_CLj7OMrlbafR60mYJ-lTrgWocPMsZ5ZYQ5g=s176-c-k-c0x00ffffff-no-rj"
-              size={30}
-              icon={<AntDesignOutlined />}
-            />
+            <div style={{ backgroundColor: 'rgba(128, 128, 128, 0.139)', padding: '5px', marginLeft: '8px', borderRadius: '4px' }}>
+              <Avatar
+                style={{ marginLeft: '5px', cursor: 'pointer' }}
+                src="https://yt3.ggpht.com/ytc/AKedOLShRb_CLj7OMrlbafR60mYJ-lTrgWocPMsZ5ZYQ5g=s176-c-k-c0x00ffffff-no-rj"
+                size={30}
+                icon={<AntDesignOutlined />}
+              />
             </div>
           </Tooltip>
         </div>

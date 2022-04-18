@@ -5,6 +5,7 @@ var roomsController = require("../Controller/RoomsController");
 var userRoomController = require("../Controller/userRoomController");
 var DBController = require("../DBController");
 var codeController=require("../Controller/CodeController");
+var docController=require("../Controller/DocumentsController");
 
 var authenticate = require("../authenticate");
 
@@ -22,6 +23,63 @@ router.post("/getCodeForRoom",authenticate.verifyUser,(req,res,next)=>{
         }
         else{
             res.status(200).send(result);
+        }
+    })
+});
+
+router.post("/getDocsForRoom",authenticate.verifyUser,(req,res,next)=>{
+    let roomId = req.body.roomId;
+    
+    let nsql = `
+        Select convert(current_blob USING utf8) AS doc From document
+        where roomId='${roomId}';
+    `;
+
+    DBController.con.query(nsql, (err, result) => {
+        if(err){
+            next(err);
+        }
+        else{
+            res.status(200).send(result);
+        }
+    })
+});
+
+router.post("/saveDocChanges",authenticate.verifyUser,(req,res,next)=>{
+    let roomId = req.body.roomId;
+   
+    let nsql = `
+        Select* From document
+        where roomId='${roomId}';
+    `;
+
+    DBController.con.query(nsql, (err, result) => {
+        if(err){
+            
+            docController.createDocumentTable(req.body.blob,roomId).then((resp)=>{
+                res.status(200).send('Successfully')
+            })
+            .catch((err)=>{
+                next(err);
+            })
+        }
+        else{
+            if(result.length==0){
+                docController.createDocumentTable(req.body.blob,roomId).then((resp)=>{
+                    res.status(200).send('Successfully')
+                })
+                .catch((err)=>{
+                    next(err);
+                })
+            }
+            else{
+                docController.alterDocTable(req.body.blob,roomId).then((resp)=>{
+                    res.status(200).send('Successfully')
+                })
+                .catch((err)=>{
+                    next(err);
+                })
+            }
         }
     })
 });

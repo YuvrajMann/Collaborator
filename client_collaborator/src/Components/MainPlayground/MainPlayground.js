@@ -44,6 +44,7 @@ export default function MainPlayground(props) {
   let [username, setUserName] = useState(null);
   let [joinBtnLoading,setJoinBtnLoading]=useState()
   let [changesSaved,setChangesSaved]=useState('saved');
+  let [initialDoc,setInitialDoc]=useState('');
 
   let location = window.location.href;
   let roomId = location.toString().split('/')[4];
@@ -89,6 +90,26 @@ export default function MainPlayground(props) {
     checkMemberParticipant();
     getProfile();
   }, []);
+  
+  let getDocsForRoom=(rm_id)=>{
+    setChangesSaved('saving');
+    setPageLoading(true);
+    setInitialDoc('');
+
+    axiosInstance.post('/rooms/getDocsForRoom',{
+      roomId:rm_id
+    }).then((resp)=>{
+      setChangesSaved('saved');
+      setInitialDoc(resp.data);
+      setPageLoading(false);
+    })
+    .catch((err)=>{
+      setChangesSaved('saved');
+      setPageLoading(false);
+      setInitialDoc('');
+    })
+  };
+
   let fetchCodeDetails=(rm_id)=>{
       setPageLoading(true);
       axiosInstance.post('/rooms/getCodeForRoom',{roomId:rm_id}).then((resp)=>{
@@ -109,6 +130,7 @@ export default function MainPlayground(props) {
       console.log(resp);
       setRoomDetails(resp.data.roomDetails[0]);
       dbRoomId=resp.data.roomDetails[0].id;
+      getDocsForRoom(dbRoomId);
       fetchCodeDetails(resp.data.roomDetails[0].id);
       setPageLoading(false);
       setNotSignedIn(false);
@@ -132,9 +154,6 @@ export default function MainPlayground(props) {
     alert(editorRef.current?.getValue());
   }
 
-  
-  
- 
   let saveChanges=(nextCodeVal,nextRoomId)=>{
     setChangesSaved('saving');
     console.log('Debounce');
@@ -148,6 +167,21 @@ export default function MainPlayground(props) {
       setChangesSaved('saved');      
     });
   }
+
+  let saveTextChanges=(nextTextVal,nextRoomId)=>{
+    setChangesSaved('saving');
+    console.log('Debounce');
+    axiosInstance.post('/rooms/saveDocChanges',{
+      blob:nextTextVal,
+      roomId:nextRoomId
+    }).then((resp)=>{
+      setChangesSaved('saved');
+    })
+    .catch((err)=>{
+      setChangesSaved('saved');      
+    });
+  }
+
   const handler = useRef(debounce((nextCodeVal,nextRoomId)=>{saveChanges(nextCodeVal,nextRoomId)}, 1000)).current;
 
   function onEditorChange(e) {
@@ -220,11 +254,10 @@ export default function MainPlayground(props) {
     }
   }, props.socket);
 
-
   return (
     <div>
       {
-        pageLoading ? (
+        (pageLoading||!initialDoc) ? (
           <div className="playground_wrapper">
             <img src={Ellipse}></img>
           </div>
@@ -252,7 +285,7 @@ export default function MainPlayground(props) {
                   />
                 </div>
                 <div className="right_view_area">
-                  <TextEditor socket={props.socket}></TextEditor>
+                  <TextEditor initialDoc={initialDoc} saveTextChanges={saveTextChanges} setChangesSaved={setChangesSaved} roomDetails={roomDetails} socket={props.socket}></TextEditor>
                 </div>
               </SplitPane>
             </>

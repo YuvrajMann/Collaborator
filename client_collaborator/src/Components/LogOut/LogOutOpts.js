@@ -55,8 +55,7 @@ export default function LogOutOpts(props) {
     // else{
     //   message.warning('Invalid username , must not contain spaces');
     // }
-  let newRoomJoin=(roomName,roomDescription)=>{
-  
+  let newRoomJoin=(roomName,roomDescription)=>{ 
     console.log('correct');
     setBtnLoading(true);
     axiosInstance.post('/rooms/createAndAssignRoom',{
@@ -86,6 +85,7 @@ export default function LogOutOpts(props) {
     <div className="logJoinNew">
       <NewRoomModal btnLoading={btnLoading}  newRoomJoin={()=>{
         console.log('Goon')
+        
       }} newRoomModalOpen={newRoomModalOpen} setNewRoomModalOpen={setNewRoomModalOpen}></NewRoomModal>
       <RoomJoinModal joinARoom={joinARoom} joinRoomModalOpen={joinRoomModalOpen} setJoinRoomModalOpen={setJoinRoomModalOpen}></RoomJoinModal>
       <div className="header_area">

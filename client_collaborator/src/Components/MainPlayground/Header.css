@@ -183,7 +183,7 @@
 .chat_m_ara{
     bottom: 0px;
 }   
-.ant-drawer .ant-drawer-content {
+.main_cnt.ant-drawer .ant-drawer-content {
     max-height: calc(100% - 76px);
 }
 .editorStatus{
@@ -191,4 +191,36 @@
     font-weight: bold;
     color: rgba(0, 0, 0, 0.555);
     text-decoration: underline;
+}
+.chat_icn_home{
+    cursor: pointer;
+    /* background-color: rgba(0, 0, 0, 0.178); */
+    border-radius: 50%;
+    padding: 5px;
+    width: 38px;
+    margin-right: 5px;
+    font-size: 17px;
+    text-align: center;
+    transition: all ease-in-out 0.1s;
+}
+.chat_icn_home:hover{
+    background-color: rgba(0, 0, 0, 0.178);
+    border-radius: 50%;
+    text-align: center;
+}
+.chat_icn2{
+    cursor: pointer;
+    /* background-color: rgba(0, 0, 0, 0.178); */
+    border-radius: 50%;
+    padding: 5px;
+    width: 36px;
+  
+    font-size: 17px;
+    text-align: center;
+    transition: all ease-in-out 0.1s;
+}
+.chat_icn2:hover{
+    background-color: rgba(0, 0, 0, 0.178);
+    border-radius: 50%;
+    text-align: center;
 }

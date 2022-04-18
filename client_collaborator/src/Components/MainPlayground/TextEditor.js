@@ -1,12 +1,23 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect,useRef} from 'react';
 import RichTextEditor from 'react-rte';
 import { axiosInstance } from '../../utils/axiosInterceptor';
+import { debounce } from "lodash";
 
 export default function MyStatefulEditor(props){
   let [state,setState]=useState(RichTextEditor.createEmptyValue());
-  let onChange = (value) => {
-   
+  
+  useEffect(()=>{
+    console.log(props.initialDoc);
+    if(props.initialDoc!=''){
+      let newState=RichTextEditor.createValueFromString(props.initialDoc[0].doc,'html');
+      setState(newState);
+    }
+  },[]);
 
+  const handler = useRef(debounce((nextTextVal,nextRoomId)=>{props.saveTextChanges(nextTextVal,nextRoomId)}, 1000)).current;
+
+  let onChange = (value) => {
+        handler(value.toString('html'),props.roomDetails.id);
         setState(value);
         let location=window.location.href;
         let roomId=location.toString().split('/')[4];
@@ -30,7 +41,7 @@ export default function MyStatefulEditor(props){
       })
     }
   },[props.socket])
-      
+    
   return (
     <RichTextEditor
       value={state}

@@ -76,6 +76,8 @@ export default function RoomSelector(props) {
   };
 
   let joinARoom = (name, roomId) => {
+    // console.log(roomId,username);
+    name=username;
     if (usernameRegex(name)) {
       props.socket.emit('checkRoomExistence', roomId, name);
     }

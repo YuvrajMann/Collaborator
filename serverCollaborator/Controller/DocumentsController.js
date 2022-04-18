@@ -3,17 +3,41 @@ var DBController = require("../DBController");
 let sql=`
     CREATE TABLE IF NOT EXISTS document(
         current_blob BLOB,
+        roomId INT,
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         updated_at TIMESTAMP NOT NULL DEFAULT NOW() ON UPDATE NOW(),
-        roomId INT,
         last_updated_at timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        last_updated_by INT,
-        FOREIGN KEY (last_updated_by) REFERENCES users(id),
         FOREIGN KEY (roomId) REFERENCES rooms(id)
     );
 `
+let alterDocTable = (update_blob, room_id) => {
+    let myPromise = new Promise((myResolve, myReject) => {
+        DBController.con.query(sql, (err, result) => {
+            if (err) {
+                myReject(err);
+            }
+            else {
+                let updateSql = `
+                    UPDATE document
+                    SET current_blob='${update_blob}'
+                    where roomId='${room_id}';
+                `;
 
-let createDocumentTable=(current_blob,last_updated_by,room_id)=>{
+                DBController.con.query(updateSql, (err, result) => {
+                    if (err) {
+                        myReject(err);
+                    }
+                    else {
+                        myResolve('Update');
+                    }
+                })
+            }
+        });
+    })
+
+    return myPromise;
+}
+let createDocumentTable=(current_blob,room_id)=>{
         let myPromise = new Promise((myResolve, myReject)=>{
             DBController.con.query(sql, (err, result) => {
                 if (err) {
@@ -21,8 +45,8 @@ let createDocumentTable=(current_blob,last_updated_by,room_id)=>{
                 } 
                 else {
                     let insertSql=`
-                        Insert Into document(current_blob,last_updated_by,roomId) 
-                        VALUES('${current_blob}','${last_updated_by}','${room_id}');
+                        Insert Into document(current_blob,roomId) 
+                        VALUES('${current_blob}','${room_id}');
                     `;
                     DBController.con.query(insertSql, (err, result) => {
                         if(err){
@@ -40,5 +64,6 @@ let createDocumentTable=(current_blob,last_updated_by,room_id)=>{
 
 
 module.exports={
-    createDocumentTable
+    createDocumentTable,
+    alterDocTable
 };
