@@ -34,7 +34,7 @@ function App() {
 
   useEffect(()=>{
     console.log('use effect');
-    socket = io('http://localhost:3000',{
+    socket = io('https://collaborator1.herokuapp.com/',{
       reconnectionDelay: 1000,
       reconnection: true,
       reconnectionAttemps: 10,

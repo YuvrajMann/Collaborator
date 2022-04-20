@@ -20,7 +20,7 @@ export default function Login() {
     console.log(username, password);
     axios({
       method: "post",
-      url: "http://localhost:3000/users/signUp",
+      url: "https://collaborator1.herokuapp.com/users/signUp",
       data: {
         username: username,
         password: password,

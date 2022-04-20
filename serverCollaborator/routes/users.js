@@ -62,8 +62,9 @@ router.post("/signUp", (req, res, next) => {
       , id INT NOT NULL AUTO_INCREMENT  PRIMARY KEY
       , password VARCHAR(255) NOT NULL);
     `;
-
+  
   DBController.con.query(sql, (err, result) => {
+    console.log(err);
     if (err) {
       next(err);
     } else {

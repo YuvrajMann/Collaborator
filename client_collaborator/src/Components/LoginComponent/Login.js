@@ -22,7 +22,7 @@ export default function Login() {
 
     let loginUser = () => {
         setLoading(true);
-        axios.post('http://localhost:3000/users/signin', {
+        axios.post("https://collaborator1.herokuapp.com/users/signin", {
             username: username,
             password: password
         }).then((resp) => {

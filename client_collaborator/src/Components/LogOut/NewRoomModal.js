@@ -72,13 +72,13 @@ export default function NewRoomModal(props) {
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                   onClick={() => {
                     console.log(name);
-                      // props.newRoomJoin(name,description);
-                    // if (name) {
-                    //   props.setNewRoomModalOpen(false);
-                    // }
-                    // else {
-                    //   message.warning('Name field is requred!');
-                    // }
+                    props.newRoomJoin(name,description);
+                    if (name) {
+                      props.setNewRoomModalOpen(false);
+                    }
+                    else {
+                      message.warning('Name field is requred!');
+                    }
                   }}
                 >
                   {

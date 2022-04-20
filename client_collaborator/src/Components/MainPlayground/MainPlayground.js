@@ -103,10 +103,15 @@ export default function MainPlayground(props) {
       setInitialDoc(resp.data);
       setPageLoading(false);
     })
-    .catch((err)=>{
+    .catch((err)=>{ 
       setChangesSaved('saved');
       setPageLoading(false);
-      setInitialDoc('');
+      console.log('no intitial');
+      setInitialDoc([
+        {
+          doc:'Plz start writing'
+        }
+      ]);
     })
   };
 
