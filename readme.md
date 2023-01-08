@@ -1,5 +1,5 @@
 # Collaborator
-Live Link - https://collaborator.netlify.app/
+Live Link - https://collaborator.netlify.app/ <br/>
 Demo Link - https://www.youtube.com/watch?v=14zjaOsCMu4&ab_channel=Swift%7B%7DCode
 ## Application Architecture
 ![Untitled Diagram drawio (6)](https://user-images.githubusercontent.com/66714991/182916994-acd84475-d2c8-4c32-b90f-fb083e13198c.png)
