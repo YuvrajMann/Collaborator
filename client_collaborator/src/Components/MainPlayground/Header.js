@@ -285,7 +285,7 @@ export default function Header(props) {
             <div style={{ backgroundColor: 'rgba(128, 128, 128, 0.139)', padding: '5px', marginLeft: '8px', borderRadius: '4px' }}>
               <Avatar
                 style={{ marginLeft: '5px', cursor: 'pointer' }}
-                src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fmdbootstrap.com%2Fdocs%2Fstandard%2Fextended%2Fprofiles%2F&psig=AOvVaw1XA_EpTtTOrgbqrWU__-U5&ust=1673286869529000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCJCVsL3FuPwCFQAAAAAdAAAAABAE"
+                src="https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 size={30}
                 icon={<AntDesignOutlined />}
               />

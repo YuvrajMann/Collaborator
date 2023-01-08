@@ -54,8 +54,8 @@
 .usr_box{
     background-color: rgba(255, 255, 255, 0.342);
     width: 200px;
-    border-radius: 7px;
-    color: white;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 0.831);
     text-align: center;
     height: 230px;
     margin-top: 20px;
@@ -74,9 +74,15 @@
 .room_imagee img{
    height: 180px;
    width: 100%;
-   object-fit: contain;
+   object-fit: cover;
 }
 .s_divv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-style: italic;
+    height: 40px;
     border-top: 1px solid rgba(255, 235, 205, 0.112);
 }
 .recentRoomsBtn{
