@@ -14,7 +14,11 @@ var con = mysql.createConnection({
     user     : process.env.user,
     password : process.env.password,
     database : process.env.database,
-    ssl: {ca: fs.readFileSync("./BaltimoreCyberTrustRoot.crt.pem")}
+    ssl: true
 });
+con.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to the MySQL server.');
+  });
 console.log(con);
 module.exports={con};

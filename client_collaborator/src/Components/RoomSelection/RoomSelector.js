@@ -68,6 +68,8 @@ export default function RoomSelector(props) {
     }).then((resp) => {
       setBtnLoading(false);
       message.success('New Room Created successfully!');
+      fetchRooms();
+    getProfile();
     })
       .catch((err) => {
         message.success('Some error occured');
@@ -177,17 +179,17 @@ export default function RoomSelector(props) {
       </div>
       <div className='recentRoomsBtn'>
         {
-          roomsUnderUser ? (roomsUnderUser.map((room) => {
+          roomsUnderUser ? (roomsUnderUser.map((room,index) => {
             return (
               <div className='usr_box' onClick={() => {
                 history(`/playground/${room.room_id_assigned}?${username}`);
               }}>
                 <div className='room_imagee'>
-                  <img src='https://s3.amazonaws.com/images.seroundtable.com/google-amsterdam-conference-room-1436230709.jpg'></img>
+                  <img src={`https://source.unsplash.com/random/200x220?sig=${index}`}></img>
                 </div>
                 <div className='s_divv'>
                   <div className='room_usr_name'>{room.roomname}</div>
-                  <div className='room_description'>{room.room_description}</div>
+                  {/* <div className='room_description' style={{fontWeight:"400",fontSize:"0.8em"}}>{room.room_description}</div> */}
                 </div>
               </div>
             )

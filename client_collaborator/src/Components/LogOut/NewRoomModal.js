@@ -85,7 +85,7 @@ export default function NewRoomModal(props) {
                     props.btnLoading?(
                       'Loading'
                     ):(
-                      'Create and Join New Room'
+                      'Create New Room'
                     )
                   }
                 </button>

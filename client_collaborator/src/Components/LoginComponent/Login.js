@@ -22,7 +22,7 @@ export default function Login() {
 
     let loginUser = () => {
         setLoading(true);
-        axios.post("https://collaborator1.herokuapp.com/users/signin", {
+        axios.post("https://collaboratorbackend.azurewebsites.net/users/signin", {
             username: username,
             password: password
         }).then((resp) => {
